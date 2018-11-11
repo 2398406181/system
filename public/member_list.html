@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统——账号管理</title>
+    <!-- 引入重置样式 -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <!-- 引入首页的样式 -->
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="/users/checkState"></script>
+    
+</head>
+
+<body>
+    <div id="app">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>管理账号</span>
+                </div>
+                <div class="text item">
+                    <!-- 账号管理 -->
+                    <template>
+                        <el-table :data="tableData" style="width: 100%">
+                            <el-table-column label="用户编号" width="180">
+                                <template slot-scope="scope">
+                                    <span style="margin-left: 10px">{{scope.row.u_id }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="用户名称" width="180">
+                                <template slot-scope="scope">
+                                    <span style="margin-left: 10px">{{scope.row.userName }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="用户组" width="180">
+                                <template slot-scope="scope">
+                                    <p>{{ scope.row.userGroup }}</p>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="操作" width="200">
+                                <template slot-scope="scope">
+                                    <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" type="primary"
+                                        plain><i class="el-icon-edit"></i> 编辑</el-button>
+                                    <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" type="danger"
+                                        plain><i class="el-icon-delete"></i> 删除</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+            </el-card>
+        </el-main>
+    </div>
+    <!-- 引入jquery -->
+    <script src="./js/jquery.min.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.min.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+    <script src="./layui/layui.all.js"></script>
+    <script>
+        //创建vue实例
+        new Vue({
+            //挂载视图
+            el: "#app",
+
+            data() {
+                return {
+                    tableData: []
+                };
+            },
+            mounted: function () {
+
+                //需要执行的方法可以在mounted中进行触发，其获取的数据可以赋到data中后，可以放在前面进行渲染
+                this.get();
+            },
+            methods: {
+                get() {
+                    $.get("/users/list", (data) => {
+                        this.tableData = data.data;
+                    });
+                },
+                //删除数据
+                handleDelete(index, data) {
+                    //console.log(data);
+                    var _this=this;
+                    layer.confirm('您是确定要删除吗？', {
+                        title: '提示信息框',
+                        btn: ['确定', '取消'] //按钮
+                    }, function () {
+                        $.get("/users/del", data, (data) => {
+                            if (data.ok) {
+                                _this.get();   
+                            } else {
+                                alert(data.msg);
+                            }
+                        });
+                        layer.msg('已经删除完成!', { icon: 5 });
+                    });
+                },
+                //修改数据
+                handleEdit(index, data) {
+                    var id = data.u_id;
+                    //console.log(id);
+                    location.href = `member_ed.html?${id}`;
+                }
+
+
+            }
+        });
+
+
+
+    </script>
+</body>
+
+</html>

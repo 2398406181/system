@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统——商品添加管理</title>
+    <!-- 引入重置样式 -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 引入首页的样式 -->
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="/users/checkState"></script>
+</head>
+
+<body>
+    <div id="app">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>添加商品</span>
+                </div>
+                <div class="text item">
+                    <el-form :label-position="labelPosition" :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2"
+                        label-width="100px" class="demo-ruleForm">
+                        <el-form-item label="所属分类" prop="region">
+                            <el-select v-model="ruleForm2.region" placeholder="请选择分类">
+                                <el-option label="顶级分类" value="顶级分类"></el-option>
+                                <el-option label="二级分类" value="二级分类"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="商品条形码" prop="shapeCode">
+                            <el-input v-model="ruleForm2.className"></el-input>
+                            <el-button type="primary" plain>生成条形码</el-button>
+                        </el-form-item>
+                        <el-form-item label="商品名称" prop="className">
+                            <el-input v-model="ruleForm2.className"></el-input>
+                        </el-form-item>
+                        <el-form-item label="商品售价" prop="className">
+                            <el-input v-model="ruleForm2.className"></el-input>元
+                        </el-form-item>
+                        <el-form-item label="市场价" prop="className">
+                            <el-input v-model="ruleForm2.className"></el-input>元<br>
+                            默认市场价为售价的1.2倍
+                        </el-form-item>
+                        <el-form-item label="商品进价" prop="className">
+                            <el-input v-model="ruleForm2.className"></el-input>元
+                        </el-form-item>
+                        <el-form-item label="入库数量" prop="className">
+                            <el-input v-model="ruleForm2.className"></el-input><br>
+                            记重商品单位是千克
+                        </el-form-item>
+                        <el-form-item label="商品重量" prop="className">
+                            <el-input v-model="ruleForm2.className"></el-input>
+                        </el-form-item>
+                        <el-form-item label="商品单位 " prop="className">
+                            <el-input v-model="ruleForm2.className"></el-input>元
+                        </el-form-item>
+                        <el-form-item label="会员优惠" prop="classState">
+                            <el-radio-group v-model="radio">
+                                <el-radio label="1">享受</el-radio>
+                                <el-radio label="2">不享受</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="是否促销" prop="classState">
+                            <el-radio-group v-model="radio">
+                                <el-radio label="1">启用</el-radio>
+                                <el-radio label="2">禁用</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="商品简介" prop="textA">
+                            <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea">
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="submitForm('ruleForm2')">添加</el-button>
+
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </el-card>
+        </el-main>
+    </div>
+    <!-- 引入jquery -->
+    <script src="./js/jquery.min.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.min.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+    <script>
+        //创建vue实例
+        new Vue({
+            //挂载视图
+            el: "#app",
+            data() {
+
+                return {
+                    radio: '1',
+                    labelPosition: 'top',
+                    textarea: '',
+                    ruleForm2: {
+                        region: '', //用户组
+                        className: "",
+                        classState: "",
+                        shapeCode: "",
+                        textA:""
+                    },
+
+                    rules2: {
+                        className: [
+                            { required: true, message: "分类名称必须填写", trigger: 'blur' },
+                            { min: 1, max: 10, message: "分类名称长度必须在1~10位之间", trigger: "blur" }
+                        ],
+                        region: [
+                            { required: true, message: '请选择用户组', trigger: 'change' }
+                        ]
+                    }
+                };
+            },
+            methods: {
+                //提交表单
+                submitForm(formName) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                            console.log(' submit!!');
+                        } else {
+                            console.log('error submit!!');
+                            return false;
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

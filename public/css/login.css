@@ -1,0 +1,38 @@
+.text {
+    font-size: 14px;
+  }
+
+  .item {
+    margin-bottom: 18px;
+  }
+
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both
+  }
+
+  .box-card {
+    width: 480px;
+  }
+  /* 背景 */
+  body{
+   background-image: url('../img/13.jpg');
+  }
+  /* 登录框 */
+  .box-card{
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      height: 300px;
+     
+  }
+  .el-card__header{
+    font-size: 20px;
+  }

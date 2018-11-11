@@ -1,0 +1,183 @@
+/* 页面在不同的分辨率下都要铺满 */
+html,body,#app,.el-container{
+    height: 100%;
+}
+
+.el-header, .el-footer {
+    color: #333;
+    line-height: 32px;
+  }
+
+  .el-header h2{
+      color: #000;
+      font-size: 30px;
+      font-weight: bold;
+      margin-top: 30px;
+  }
+  .el-header .c{
+      color: rgb(121, 119, 119);
+  }
+  
+  /* 左侧栏的样式 */
+  .el-aside {
+    background: url(../img/left_bg.png) repeat-y;
+  }
+  
+  .el-main {
+    color: #333;
+    padding-top:0;
+  }
+
+  .el-main .el-card__header{
+      height: 41px;
+      line-height: 41px;
+      padding: 0px 20px;
+
+      color: #000;
+      font-size: 18px;
+      font-weight: bold;
+
+      background: url(../img/cardTitleBg.png) repeat-x;
+  }
+
+  .el-main .el-card__body{
+      background-color: #fff;
+  }
+
+  #importAlert{
+      margin-top: 15px;
+      margin-bottom: 15px;
+      color: green;
+      background-color: #DBE3FF;
+  }
+  #imp{
+    color: black;
+    background-color: #DBE3FF;
+  }
+  
+  body > .el-container {
+     background-color: #F8F8F8;
+  }
+
+  .el-footer{
+      font-size: 12px;
+  }
+
+  .el-footer p{
+      border-top: solid 1px #ccc;
+      line-height: 50px;
+  }
+  .text td{
+      padding: 8px;
+  }
+  /* 首页头部 */
+  .title{
+     text-align: right;
+     margin-right: 10px;
+     color:#ccc;
+     margin-top:30px;
+  }
+  .title h2{
+      font-size: 28px;
+      margin-bottom: 34px;
+  }
+  .title .c{
+      color: rgb(145, 140, 140);
+  }
+  .title .ma{
+      margin-top:10px;
+      margin-bottom: 10px;
+  }
+  .title .ma a{
+      color:#ccc;
+      text-decoration: none;
+  }
+  /* 菜单导航 */
+  .el-menu{
+      background-color: transparent;
+      border-right: none;
+  }
+  .el-menu a{
+      color:#fff;
+      text-decoration: none;
+  }
+ .el-submenu__title{
+     background: url("../img/menu_bg.png");
+     height: 33px;
+     line-height: 33px;
+     color: #fff;
+     text-align: right;
+     width: 210px;
+     border-radius: 4px 0px 0px 4px;
+     margin-left:20px;
+     margin-top: 10px;
+ }
+ /* 子菜单hover效果 */
+ .el-menu-item:focus, .el-menu-item:hover{
+     background-color: rgba(0,0,0,0.2);
+ }
+ .el-menu-item{
+     color: #fff;
+     text-align: right;
+ }
+ 
+element.style {
+    padding-left: 40px;
+}
+.el-menu-item:focus, .el-menu-item:hover {
+    background-color: rgba(0,0,0,0.2);
+    font-weight: bold;
+}
+.el-submenu .el-menu-item {
+    height: 33px;
+    line-height: 33px;
+    padding: 0 20px;
+    min-width: 200px;
+    margin-top: 5px;
+    width: 210px;
+    border-radius: 4px 0px 0px 4px;
+    margin-left:20px;
+}
+/* 箭头 */
+.el-submenu__icon-arrow{
+    display: none;
+}
+
+.el-input{
+    width: 20%;
+}
+.el-input--suffix{
+    width: 100%;
+}
+.el-menu-item.is-active{
+    background-color: rgba(0,0,0,0.2);
+}
+.el-menu-item.is-active a{
+    font-weight: bold;
+    color: #409EFF;
+}
+.el-table__row{
+    height: 40px;
+}
+.el-table .cell{
+    padding: 0;
+    text-align: center;
+}
+.el-form-item__content .el-input{
+    width: 100%;
+}
+.el-pagination{
+    margin-top:30px;
+}
+
+/* 商品入库 */
+.el-form-item__content .el-input{
+    width: 200px;
+}
+.setD{
+    font-size: 12px;
+    color: rgb(150, 149, 149);
+}
+.layui-layer-shade{
+    width: 0px !important;
+}

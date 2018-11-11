@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统——添加会员账号</title>
+    <!-- 引入重置样式 -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 引入首页的样式 -->
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="/users/checkState"></script>
+</head>
+
+<body>
+    <div id="app">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>添加会员账号</span>
+
+                </div>
+                <div class="text item">
+                    <el-form :label-position="labelPosition" :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2"
+                        label-width="100px" class="demo-ruleForm">
+                        <el-form-item label="真实姓名：" prop="username">
+                            <el-input v-model="ruleForm2.username"></el-input>
+                        </el-form-item>
+                        <el-form-item label="会员卡卡号：" prop="vipNum">
+                            <el-input  v-model="ruleForm2.vipNum" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <el-form  :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2"
+                        label-width="100px" class="demo-ruleForm">
+                    <el-form-item label="选择用户组" prop="region">
+                            <el-select v-model="ruleForm2.region" placeholder="请选择用户组">
+                                <el-option label="普通会员--99%" value="普通会员--99%"></el-option>
+                                <el-option label="黄金会员--86%" value="黄金会员--86%"></el-option>
+                                <el-option label="钻石会员--70%" value="钻石会员--70%"></el-option>
+                                <el-option label="至尊会员--60%" value="至尊会员--60%"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="身份证卡号" prop="vipNum">
+                                <el-input  v-model="ruleForm2.vipNum" autocomplete="off"></el-input>
+                            </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="submitForm('ruleForm2')">添加</el-button>    
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </el-card>
+        </el-main>
+    </div>
+    <!-- 引入jquery -->
+    <script src="./js/jquery.min.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.min.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+    <script>
+        //创建vue实例
+        new Vue({
+            //挂载视图
+            el: "#app",
+            data() {
+                
+                return {
+                    labelPosition: 'top',
+                    ruleForm2: {
+                        pass: '',      //密码
+                        checkPass: '', //确认密码
+                        username: '',
+                        region: '' //用户组
+                    },
+                    rules2: {
+                       
+                        username: [
+                            { required: true, message: "用户名必须填写", trigger: 'blur' },
+                            { min: 3, max: 18, message: "用户名长度必须在3~18位之间", trigger: "blur" }
+                        ],
+                        region: [
+                            { required: true, message: '请选择用户组', trigger: 'change' }
+                        ]
+                    }
+                };
+            },
+            methods: {
+                //提交表单
+                submitForm(formName) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                           //发送ajax请求
+                           $.post("/users/add",this.ruleForm2,(data)=>{
+                              if(data.ok){
+                                  alert(data.msg);
+                                 
+                              }else{
+                                alert(data.msg);
+                              }
+                           });
+                        } else {
+                            console.log('error submit!!');
+                            return false;
+                        }
+                    });
+                },
+                //重置表单
+                resetForm(formName) {
+                    this.$refs[formName].resetFields();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
