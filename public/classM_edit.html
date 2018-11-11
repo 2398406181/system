@@ -42,7 +42,7 @@
                             </el-radio-group>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" @click="submitForm('ruleForm2')">添加</el-button>
+                            <el-button type="primary" @click="submitForm('ruleForm2')">修改</el-button>
 
                         </el-form-item>
                     </el-form>
@@ -68,7 +68,8 @@
                     ruleForm2: {
                         c_parentid:"",
                         c_name:"",
-                        c_islocked:''
+                        c_islocked:'',
+                        c_id:''
                     },
                     cgdata:[],
                     rules2: {
@@ -85,25 +86,29 @@
             mounted() {
                 $.get("/cg/list",(data)=>{
                     this.cgdata=data.data;
-                })
+                });
+                 //获取URL地址
+                 var index = location.href;
+                //截取id值
+                var id = index.substr(index.indexOf("?") + 1);
+                $.get("/cg/editList", { id }, (data) => {
+                    //密码赋值，渲染到页面
+                    console.log(data);
+                    this.ruleForm2.c_parentid = data.data[0].c_parentid;
+                    this.ruleForm2.c_name = data.data[0].c_name;
+                    this.ruleForm2.c_islocked = data.data[0].c_islocked;
+                    this.ruleForm2.c_id = data.data[0].c_id;
+                });
             },
             methods: {
                 //提交表单
                 submitForm(formName) {
                     this.$refs[formName].validate((valid) => {
                         if (valid) {
-                           
-                            $.post('/cg/add',this.ruleForm2,(data)=>{
+                            $.post("/cg/edit",this.ruleForm2, (data) => {
                                 if(data.ok){
-                                   if(confirm("确定继续添加吗？")){
-                                       location.reload();
-                                   }
-                                   else{
-                                        location.href="classM.html";
-                                   }
-                                   
-                                }else{
                                     alert(data.msg);
+                                    location.href="classM.html";
                                 }
                             });
                         } else {

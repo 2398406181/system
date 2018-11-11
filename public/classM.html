@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="./css/elementUI.css">
     <!-- 引入首页的样式 -->
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./layui/css/layui.css">
+
     <script src="/users/checkState"></script>
 </head>
 
@@ -26,14 +28,22 @@
                     <!-- 账号管理 -->
                     <template>
                         <el-table :data="tableData" style="width: 100%">
-                            <el-table-column label="分类名称" width="280">
+                            <el-table-column label="分类编号" width="180">
                                 <template slot-scope="scope">
-                                    
-                                    <span style="margin-left: 10px">{{ scope.row.designation }}</span>
+                                    <span style="margin-left: 10px">{{scope.row.c_id }}</span>
                                 </template>
                             </el-table-column>
-                           
-                            <el-table-column label="操作">
+                            <el-table-column label="分类名称" width="180">
+                                <template slot-scope="scope">
+                                    <span style="margin-left: 10px">{{scope.row.c_name}}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="所属分类" width="180">
+                                <template slot-scope="scope">
+                                    <p>{{ scope.row.c_parentid }}</p>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="操作" width="200">
                                 <template slot-scope="scope">
                                     <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" type="primary"
                                         plain><i class="el-icon-edit"></i> 编辑</el-button>
@@ -53,28 +63,53 @@
     <script src="./js/vue.min.js"></script>
     <!-- 引入elementUI -->
     <script src="./js/elementUI.js"></script>
+    <script src="./layui/layui.all.js"></script>
     <script>
         //创建vue实例
         new Vue({
             //挂载视图
             el: "#app",
             data() {
-
                 return {
-                    tableData: [{
-                        designation: '日常用品'
-                       
-                    }, {
-                        designation: '食品'
-                    }, {
-                        designation: '烟酒'
-                    }, {
-                        designation: '手机'
-                    }]
+                    tableData: []
                 };
             },
+            mounted: function () {
+
+                //需要执行的方法可以在mounted中进行触发，其获取的数据可以赋到data中后，可以放在前面进行渲染
+                this.get();
+            },
             methods: {
-               
+                get() {
+                    $.get("/cg/list", (data) => {
+                        this.tableData = data.data;
+                        //console.log(data);
+                    });
+                },
+                //删除数据
+                handleDelete(index, data) {
+                    //console.log(data);
+                    var _this = this;
+                    layer.confirm('您是确定要删除吗？', {
+                        title: '提示信息框',
+                        btn: ['确定', '取消'] //按钮
+                    }, function () {
+                        $.get("/cg/del", data, (data) => {
+                            if (data.ok) {
+                                _this.get();
+                            } else {
+                                alert(data.msg);
+                            }
+                        });
+                        layer.msg('已经删除完成!', { icon: 5 });
+                    });
+                },
+                //修改数据
+                handleEdit(index, data) {
+                    var id = data.c_id;
+                    //console.log(id);
+                    location.href = `classM_edit.html?${id}`;
+                }
             }
         });
     </script>

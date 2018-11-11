@@ -110,6 +110,7 @@
                             //发送ajax请求
                             $.post("/users/add", this.ruleForm2, (data) => {
                                 if (data.ok) {
+                                    alert(data.msg);
                                     location.href = "member_list.html";
 
                                 } else {

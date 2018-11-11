@@ -1,27 +1,12 @@
 var express = require('express');
 var router = express.Router();
 //引入mysql模块
-var mysql = require("mysql");
+var connect = require("./common");
 var utility = require("utility");
 //解密
 var crypto = require('crypto');
 
-var connect = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  port: "3306",
-  database: "system"
-});
 
-//开始链接数据库
-connect.connect(function (err) {
-  if (err) {
-    console.log(`mysql连接失败: ${err}!`);
-  } else {
-    console.log("mysql连接成功!");
-  }
-});
 /* GET users listing. */
 router.post("/add", function (req, res, next) {
   //接收数据

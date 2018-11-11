@@ -31,47 +31,47 @@
                                 <el-option label="二级分类" value="二级分类"></el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="商品条形码" prop="shapeCode">
-                            <el-input v-model="ruleForm2.className"></el-input>
+                        <el-form-item label="商品条形码" prop="barcode">
+                            <el-input v-model="ruleForm2.barcode"></el-input>
                             <el-button type="primary" plain>生成条形码</el-button>
                         </el-form-item>
-                        <el-form-item label="商品名称" prop="className">
-                            <el-input v-model="ruleForm2.className"></el-input>
+                        <el-form-item label="商品名称" prop="goodsname">
+                            <el-input v-model="ruleForm2.goodsname"></el-input>
                         </el-form-item>
-                        <el-form-item label="商品售价" prop="className">
-                            <el-input v-model="ruleForm2.className"></el-input>元
+                        <el-form-item label="商品售价" prop="saleprice">
+                            <el-input v-model="ruleForm2.saleprice"></el-input>元
                         </el-form-item>
-                        <el-form-item label="市场价" prop="className">
-                            <el-input v-model="ruleForm2.className"></el-input>元<br>
+                        <el-form-item label="市场价" prop="marketprice">
+                            <el-input v-model="ruleForm2.marketprice"></el-input>元<br>
                             默认市场价为售价的1.2倍
                         </el-form-item>
-                        <el-form-item label="商品进价" prop="className">
-                            <el-input v-model="ruleForm2.className"></el-input>元
+                        <el-form-item label="商品进价" prop="goodsprice">
+                            <el-input v-model="ruleForm2.goodsprice"></el-input>元
                         </el-form-item>
-                        <el-form-item label="入库数量" prop="className">
-                            <el-input v-model="ruleForm2.className"></el-input><br>
+                        <el-form-item label="入库数量" prop="stockNum">
+                            <el-input v-model="ruleForm2.stockNum"></el-input><br>
                             记重商品单位是千克
                         </el-form-item>
-                        <el-form-item label="商品重量" prop="className">
-                            <el-input v-model="ruleForm2.className"></el-input>
+                        <el-form-item label="商品重量" prop="weigth">
+                            <el-input v-model="ruleForm2.weigth"></el-input>
                         </el-form-item>
-                        <el-form-item label="商品单位 " prop="className">
-                            <el-input v-model="ruleForm2.className"></el-input>元
+                        <el-form-item label="商品单位 " prop="unit">
+                            <el-input v-model="ruleForm2.unit"></el-input>元
                         </el-form-item>
-                        <el-form-item label="会员优惠" prop="classState">
-                            <el-radio-group v-model="radio">
+                        <el-form-item label="会员优惠" prop="discount">
+                            <el-radio-group v-model="ruleForm2.discount">
                                 <el-radio label="1">享受</el-radio>
                                 <el-radio label="2">不享受</el-radio>
                             </el-radio-group>
                         </el-form-item>
-                        <el-form-item label="是否促销" prop="classState">
-                            <el-radio-group v-model="radio">
+                        <el-form-item label="是否促销" prop="promotion">
+                            <el-radio-group v-model="ruleForm2.promotion">
                                 <el-radio label="1">启用</el-radio>
                                 <el-radio label="2">禁用</el-radio>
                             </el-radio-group>
                         </el-form-item>
-                        <el-form-item label="商品简介" prop="textA">
-                            <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea">
+                        <el-form-item label="商品简介" prop="goodsDetails">
+                            <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ruleForm2.goodsDetails">
                             </el-input>
                         </el-form-item>
                         <el-form-item>
@@ -95,27 +95,64 @@
             //挂载视图
             el: "#app",
             data() {
-
                 return {
-                    radio: '1',
-                    labelPosition: 'top',
-                    textarea: '',
+                    labelPosition: 'left',
                     ruleForm2: {
-                        region: '', //用户组
-                        className: "",
-                        classState: "",
-                        shapeCode: "",
-                        textA:""
+                        region: '', //分类
+                        barcode: "",//商品条形码
+                        goodsname: "",//商品名称
+                        saleprice: "",//商品售价
+                        marketprice:"",//市场价
+                        goodsprice:"",//商品进价
+                        stockNum:"",//入库数量
+                        weigth:"",//商品重量
+                        unit:"",//商品单位
+                        discount:"",//会员优惠
+                        promotion:"",//是否促销
+                        goodsDetails:""//商品简介
                     },
 
                     rules2: {
-                        className: [
-                            { required: true, message: "分类名称必须填写", trigger: 'blur' },
-                            { min: 1, max: 10, message: "分类名称长度必须在1~10位之间", trigger: "blur" }
+                        barcode: [
+                            { required: true, message: "商品条形码必须填写", trigger: 'blur' },
+                            { min: 1, max: 10, message: "商品条形码长度必须在1~10位之间", trigger: "blur" }
                         ],
                         region: [
-                            { required: true, message: '请选择用户组', trigger: 'change' }
+                            { required: true, message: '请选择分类', trigger: 'change' }
+                        ],
+                        goodsname: [
+                            { required: true, message: "商品名称必须填写", trigger: 'blur' },
+                            { min: 1, max: 10, message: "商品名称长度必须在1~10位之间", trigger: "blur" }
+                        ],
+                        saleprice: [
+                            { required: true, message: "商品售价必须填写", trigger: 'blur' },
+                            { min: 1, max: 10, message: "商品售价长度必须在1~10位之间", trigger: "blur" }
+                        ],
+                        marketprice: [
+                            { required: true, message: "市场价必须填写", trigger: 'blur' },
+                            { min: 1, max: 10, message: "市场价长度必须在1~10位之间", trigger: "blur" }
+                        ],
+                        goodsprice: [
+                            { required: true, message: "商品进价必须填写", trigger: 'blur' },
+                            { min: 1, max: 10, message: "商品进价长度必须在1~10位之间", trigger: "blur" }
+                        ],
+                        stockNum: [
+                            { required: true, message: "入库数量必须填写", trigger: 'blur' },
+                            { min: 1, max: 10, message: "入库数量长度必须在1~10位之间", trigger: "blur" }
+                        ],
+                        weigth: [
+                            { required: true, message: "商品重量必须填写", trigger: 'blur' },
+                            { min: 1, max: 10, message: "商品重量长度必须在1~10位之间", trigger: "blur" }
+                        ],
+                        unit: [
+                            { required: true, message: "商品单位必须填写", trigger: 'blur' },
+                            { min: 1, max: 10, message: "商品条单位 长度必须在1~10位之间", trigger: "blur" }
+                        ],               
+                        goodsDetails: [
+                            { required: true, message: "商品简介必须填写", trigger: 'blur' },
+                            { min: 6, max: 100, message: "商品简介长度必须在1~10位之间", trigger: "blur" }
                         ]
+
                     }
                 };
             },
