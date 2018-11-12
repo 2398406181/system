@@ -25,7 +25,7 @@ router.post("/add", function (req, res, next) {
 });
 //分类管理
 router.get("/list", (req, res) => {
-  let sql = "select * from cg order by c_id desc";
+  let sql = "select t1.*,t2.c_name as name from cg as t1 left join cg as t2 on t1.c_parentid=t2.c_id order by c_id desc";
   connect.query(sql, function (error, results, fields) {
     if (error) {
       res.send({ "ok": false, "msg": "查询失败！" });

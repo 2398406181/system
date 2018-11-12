@@ -137,7 +137,7 @@ router.post('/login', (req, res) => {
       if(rst.length>0){
         res.cookie("username",username);
         res.cookie("u_id",rst[0].u_id);
-        res.send({ "ok": true, "msg": "登录成功！" });
+        res.send({ "ok": true, "msg": "登录成功！"});
       }
       else {
         res.send({ "ok": false, "msg": "登录失败！用户名或密码!"});
@@ -179,6 +179,10 @@ router.get("/pwd",(req,res)=>{
       // res.send(results);
     }
   });
-  
 });
+
+router.get("/gt",(req,res)=>{
+  var name=req.cookies.username;
+  res.send(name);
+})
 module.exports = router;

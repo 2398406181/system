@@ -23,13 +23,17 @@
         <el-container>
             <!-- 左侧 -->
             <el-aside width="230px">
-               <div class="title">
+                <div class="title">
                     <h2>超市管理系统</h2>
-                    <p><span class="c">您好,</span><span>admin</span></p>
-                    <p class="ma"><a href="main.html" target="content">管理首页</a>&emsp;|&emsp;<a href="/users/loginout" onclick="return confirm('确定退出吗？')">退出系统</a></p>
-               </div>
-               <!-- 导航 -->
-                <el-menu unique-opened="true" default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+                    <p><span class="c">您好,</span>
+                      <span class="suser"></span>
+                    </p>
+                    <p class="ma"><a href="main.html" target="content">管理首页</a>&emsp;|&emsp;<a href="/users/loginout"
+                            onclick="return confirm('确定退出吗？')">退出系统</a></p>
+                </div>
+                <!-- 导航 -->
+                <el-menu unique-opened="true" default-active="1" class="el-menu-vertical-demo" @open="handleOpen"
+                    @close="handleClose">
                     <!-- 菜单一 -->
                     <el-submenu index="1">
                         <template slot="title">
@@ -40,7 +44,7 @@
                             <el-menu-item index="1-2"><a href="classM_add.html" target="content">添加分类</a></el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
-                     <!-- 菜单二-->
+                    <!-- 菜单二-->
                     <el-submenu index="2">
                         <template slot="title">
                             <span>商品管理</span>
@@ -50,7 +54,7 @@
                             <el-menu-item index="2-2"><a href="commodity_add.html" target="content">添加商品</a></el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
-                     <!-- 菜单三 -->
+                    <!-- 菜单三 -->
                     <el-submenu index="3">
                         <template slot="title">
                             <span>进货管理</span>
@@ -60,8 +64,8 @@
                             <el-menu-item index="3-2"><a href="restock _add.html" target="content">添加库存</a></el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
-                     <!-- 菜单四 -->
-                     <el-submenu index="4">
+                    <!-- 菜单四 -->
+                    <el-submenu index="4">
                         <template slot="title">
                             <span>出货管理</span>
                         </template>
@@ -71,19 +75,19 @@
                             <el-menu-item index="4-3"><a href="clearReturnGoods.html" target="content">商品退货</a></el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
-                     <!-- 菜单五 -->
-                     <el-submenu index="5">
+                    <!-- 菜单五 -->
+                    <el-submenu index="5">
                         <template slot="title">
                             <span>统计管理</span>
                         </template>
                         <el-menu-item-group>
                             <el-menu-item index="5-1"><a href="#">销售统计</a></el-menu-item>
                             <el-menu-item index="5-2"><a href="#">进货统计</a></el-menu-item>
-                        
+
                         </el-menu-item-group>
                     </el-submenu>
-                     <!-- 菜单六 -->
-                     <el-submenu index="6">
+                    <!-- 菜单六 -->
+                    <el-submenu index="6">
                         <template slot="title">
                             <span>账号管理</span>
                         </template>
@@ -93,19 +97,19 @@
                             <el-menu-item index="6-3"><a href="member_edit.html" target="content">密码修改</a></el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
-                     <!-- 菜单七 -->
-                     <el-submenu index="7">
+                    <!-- 菜单七 -->
+                    <el-submenu index="7">
                         <template slot="title">
                             <span>会员管理</span>
                         </template>
                         <el-menu-item-group>
                             <el-menu-item index="7-1"><a href="vip.html" target="content">账号管理</a></el-menu-item>
                             <el-menu-item index="7-2"><a href="vip_add.html" target="content">添加账号</a></el-menu-item>
-                           
+
                         </el-menu-item-group>
                     </el-submenu>
-                     <!-- 菜单八 -->
-                     <el-submenu index="8">
+                    <!-- 菜单八 -->
+                    <el-submenu index="8">
                         <template slot="title">
                             <span>系统管理</span>
                         </template>
@@ -114,20 +118,20 @@
                             <el-menu-item index="8-2"><a href="#">系统配置</a></el-menu-item>
                             <el-menu-item index="8-3"><a href="#">权限管理</a></el-menu-item>
                             <el-menu-item index="8-4"><a href="#">添加管理</a></el-menu-item>
-                            
+
                         </el-menu-item-group>
                     </el-submenu>
                 </el-menu>
-                    
+
             </el-aside>
             <!-- 右侧 -->
             <el-container>
                 <el-header height="100px">
-                    <h2>欢迎您 admin</h2>
+                    <h2>欢迎您 <span class="suser"></span></h2>
                     <p class="c">查看详细的系统信息</p>
                 </el-header>
-               <!-- 主体内容 -->
-               <iframe src="main.html" name="content" width="100%" height="100%" frameborder="0"></iframe>
+                <!-- 主体内容 -->
+                <iframe src="main.html" name="content" width="100%" height="100%" frameborder="0"></iframe>
                 <el-footer height="51px">
                     <p>&copy; copyright2018 华联超市管理系统</p>
                 </el-footer>
@@ -146,7 +150,7 @@
         new Vue({
             //挂载视图
             el: "#app",
-            data:{ma:''},
+
             data() {
                 return {
                     tableData: [{
@@ -162,17 +166,24 @@
                         date: '2016-05-03',
                         name: '王小虎'
                     }]
+                    
                 }
             },
-            mounted:function(){
-                var _this=this;
-                $.get('/users/checkState',(data)=>{
-                    _this.ma=data;
-                })
+
+            mounted: function () {
+                var _this = this;
+                $.get('/users/checkState', (data) => {
+                    _this.ma = data;
+                });
+                $.get("/users/gt",(data)=>{
+                    //console.log(data);
+                    $(".suser").html(data);
+                });
+                
             },
             methods: {
                 handleOpen(key, keyPath) {
-                   // console.log(key, keyPath);
+                    // console.log(key, keyPath);
                 },
                 handleClose(key, keyPath) {
                     //console.log(key, keyPath);

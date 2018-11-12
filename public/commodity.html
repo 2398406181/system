@@ -13,6 +13,7 @@
     <!-- 引入首页的样式 -->
     <link rel="stylesheet" href="./css/index.css">
     <script src="/users/checkState"></script>
+    <link rel="stylesheet" href="./layui/css/layui.css">
 </head>
 
 <body>
@@ -26,63 +27,63 @@
                     <!-- 账号管理 -->
                     <template>
 
-                        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                            <el-select v-model="value" placeholder="--请选择分类--">
-                                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                                </el-option>
-                            </el-select>
-                            <el-form-item label="关键字：">
-                                <el-input v-model="formInline.user"></el-input>
+                        <el-form :inline="true" :model="ruleForm2" class="demo-form-inline">
+                            <el-form-item label="所属分类" prop="cate">
+                                <el-select v-model="ruleForm2.cate" placeholder="请选择分类">
+                                    <el-option v-for="(item, index) in cgdata" :key="index" :label="item.c_name" :value="item.c_id"></el-option>
+                                </el-select>
                             </el-form-item>
-
+                            <el-form-item label="关键字：" prop="search">
+                                <el-input v-model="ruleForm2.search"></el-input>
+                            </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" @click="onSubmit">查询</el-button>
+                                <el-button type="primary" @click="find()">查询</el-button>
                             </el-form-item>
                         </el-form>
                         <el-table :data="tableData" style="width: 100%">
-                            <el-table-column label="商品条形码" width="120">
+                            <el-table-column label="商品条形码" width="140">
                                 <template slot-scope="scope">
-                                    <span style="margin-left: 10px">{{ scope.row.designation }}</span>
+                                    <span style="margin-left: 10px">{{ scope.row.barcode }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column label="商品名称" width="120">
+                            <el-table-column label="商品名称" width="110">
                                 <template slot-scope="scope">
-                                    <span style="margin-left: 10px">{{ scope.row.designation }}</span>
+                                    <span style="margin-left: 10px">{{ scope.row.goodsname }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column label="所属分类" width="110">
+                            <el-table-column label="所属分类" width="80">
                                 <template slot-scope="scope">
-                                    <span style="margin-left: 10px">{{ scope.row.designation }}</span>
+                                    <span style="margin-left: 10px">{{ scope.row.name }}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label="售价(元)" width="80">
                                 <template slot-scope="scope">
-                                    <span style="margin-left: 10px"></span>
+                                    <span class="redc" style="margin-left: 10px">{{ scope.row.saleprice | prince }}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label="促销价(元)" width="80">
                                 <template slot-scope="scope">
-                                    <span style="margin-left: 10px"></span>
+                                    <span style="margin-left: 10px">{{ scope.row.saleprice | prince }}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label="市场价(元)" width="80">
                                 <template slot-scope="scope">
-                                    <span style="margin-left: 10px"></span>
+                                    <span style="margin-left: 10px">{{ scope.row.marketprice | prince }}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label="库存" width="80">
                                 <template slot-scope="scope">
-                                    <span style="margin-left: 10px"></span>
+                                    <span style="margin-left: 10px">{{ scope.row.stockNum }}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label="库存总额(元)" width="100">
                                 <template slot-scope="scope">
-                                    <span style="margin-left: 10px"></span>
+                                    <span class="redc" style="margin-left: 10px">{{ scope.row.total_price | prince}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column label="销售总额(元)" width="100">
+                            <el-table-column label="销售总额(元)" class-name="redc" width="100">
                                 <template slot-scope="scope">
-                                    <span style="margin-left: 10px"></span>
+                                    <span style="margin-left: 10px">{{ scope.row.sales_price | prince}}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label="操作" width="180">
@@ -94,9 +95,14 @@
                                 </template>
                             </el-table-column>
                         </el-table>
-                        <el-pagination background layout="prev, pager, next" :total="1000">
-                        </el-pagination>
+
                     </template>
+                </div>
+                <div>
+                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" background
+                        :current-page="currentPage" :page-sizes="[ 5, 10, 20, 30, 40, 50]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
+                        :total="total">
+                    </el-pagination>
                 </div>
             </el-card>
         </el-main>
@@ -107,52 +113,96 @@
     <script src="./js/vue.min.js"></script>
     <!-- 引入elementUI -->
     <script src="./js/elementUI.js"></script>
+    <script src="./layui/layui.all.js"></script>
     <script>
         //创建vue实例
         new Vue({
             //挂载视图
             el: "#app",
+
             data() {
 
                 return {
-                    options: [{
-                        value: '选项1',
-                        label: '黄金糕'
-                    }, {
-                        value: '选项2',
-                        label: '双皮奶'
-                    }, {
-                        value: '选项3',
-                        label: '蚵仔煎'
-                    }, {
-                        value: '选项4',
-                        label: '龙须面'
-                    }, {
-                        value: '选项5',
-                        label: '北京烤鸭'
-                    }],
-                    value: '',
-                    formInline: {
-                        user: '',
-                        region: ''
+                    ruleForm2: {
+                        cate: '',
+                        search: ""
                     },
-                    tableData: [{
-                        designation: '日常用品'
-
-                    }, {
-                        designation: '食品'
-                    }, {
-                        designation: '烟酒'
-                    }, {
-                        designation: '手机'
-                    }]
+                    cgdata: [],
+                    tableData: [],
+                    total: 32,
+                    currentPage: 1,
+                    pageSize: 5
                 };
             },
-            methods: {
-                onSubmit() {
-                    console.log('submit!');
+            filters: {
+                prince(prince) {
+                    return prince.toFixed(2);
                 }
-            }
+            },
+            methods: {
+                get() {
+                    let obj = {
+                        currentPage: this.currentPage,//分页码
+                        pageSize: this.pageSize,//每页条数
+                        cate: this.ruleForm2.cate,//查询分类id
+                        search: this.ruleForm2.search //查询关键字
+                    };
+                    //console.log(obj.search);
+                    $.get("/goods/list", obj, (data) => {
+                        this.total = data.total;
+                        this.tableData = data.data;
+                    });
+                },
+                //删除数据
+                handleDelete(index, data) {
+                    //console.log(data);
+                    var _this = this;
+                    layer.confirm('您是确定要删除吗？', {
+                        title: '提示信息框',
+                        btn: ['确定', '取消'] //按钮
+                    }, function () {
+                        $.get("/goods/del", data, (data) => {
+                            if (data.ok) {
+                                _this.get();
+                            } else {
+                                alert(data.msg);
+                            }
+                        });
+                        layer.msg('已经删除完成!', { icon: 5 });
+                    });
+                },
+                //修改数据
+                handleEdit(index, data) {
+                    var id = data.good_id;
+                    //console.log(id);
+                    location.href = `commodity_edit.html?${id}`;
+                },
+                //每页大小分页的方法
+                handleSizeChange(val) {
+                    // console.log(`每页 ${val} 条`);
+                    this.pageSize = val;
+                    this.get();
+                },
+                //当前页码改变的方法
+                handleCurrentChange(val) {
+                    // console.log(`当前页: ${val}`);
+                    this.currentPage = val;//改变页码
+                    //改变页码后要重新调用ajax，显示新的页码的数据
+                    this.get();
+                },
+                //查询
+                find() {
+                    this.get();
+                }
+            },
+            mounted: function () {
+
+                //需要执行的方法可以在mounted中进行触发，其获取的数据可以赋到data中后，可以放在前面进行渲染
+                $.get("/cg/list", (data) => {
+                    this.cgdata = data.data;
+                });
+                this.get();
+            },
         });
     </script>
 </body>
